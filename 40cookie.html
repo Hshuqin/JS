@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>cookie</title>
+	<script>
+		function setCookie(name,value,iDay){
+			var oDate=new Date();
+			oDate.setDate(oDate.getDate()+iDay);/*setDate 设置内部时间，getDate获取内部时间*/
+
+			document.cookie=name+'='+value+';expires='+oDate;/*expires设置过期时间，注意格式*/
+			/*document.cookie='name=user';
+			  document.cookie='pass=1234';
+			  格式：名字=值；  ‘=’是添加的意思，不会覆盖
+			  */
+		}
+		function getCookie(name){
+			var arr=document.cookie.split('; ')/*cookie里的数据是以分号空号隔开的，用split()分裂字符串*/
+
+			for(var i=0;i<arr.length;i++){
+				var arr2=arr[i].split('=');
+
+				if(arr2[0]==name){
+					return arr2[1];
+				}
+			}
+			return '';
+		}
+
+		function removeCookie(name){
+			setCookie(name,1,-1);/*设置cookie负一天过期*/
+		}
+
+		//setCookie('userName','dadadad',365);
+		//setCookie('password','1234567',14);
+
+		//alert(document.cookie);
+		//alert(getCookie('sex'));
+		//removeCookie('password');  //移除cookie
+		//alert(getCookie('password'));
+
+		/*在网页的查看页面信息里可以查看，cookie类似于json*/
+
+		window.onload=function(){
+			var oForm=document.getElementById('form1');
+			var oUser=document.getElementsByName('user')[0];
+
+			oForm.onsubmit=function(){
+				setCookie('user',oUser.value,14);  /*将信息存进cookie*/
+			}
+
+			oUser.value=getCookie('user');  /*将cookit的信息获取出来*/
+		}
+	</script>
+</head>
+<body>
+	<form id="form1" action="">
+		用户名：<input type="text" name="user" /><br>
+		密  码：<input type="password" name="pass" /><br>
+		<input type="submit" value="登入" />
+	</form>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>运动基础</title>
+	<style>
+		#div1{width:200px;height:200px;background: red;position:absolute;top:50px;left:0;}
+	</style>
+	<script>
+	var timer=null/*开一个定时器*/
+		function startMove(){
+			var oDiv=document.getElementById('div1');
+			clearInterval(timer);//防止多个定时器一起工作，防止加快
+			timer=setInterval(function(){
+				var speed=10;  //用一个变量存速度
+				if(oDiv.offsetLeft>=300)
+				{
+					clearInterval(timer);  //到达终点后停下来
+				}
+				else
+				oDiv.style.left=oDiv.offsetLeft+speed+'px';/*offsetLeft当前左边的像素*/
+			},30);
+		}
+	</script>
+</head>
+<body>
+	<input type="button" id="btn1" value="开始运动" onclick="startMove()" />
+	<div id="div1">
+	</div>
+</body>
+</html>

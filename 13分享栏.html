@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>分享栏</title>
+	<style>
+		#div1{width:150px;height:200px;background:green;position: absolute;left:-150px;}
+		#div1 span{position: absolute;width:20px;height:60px;line-height: 20px;background:blue;right:-20px;top:70px;}
+	</style>
+	<script>
+		window.onload=function()
+		{
+			var oDiv=document.getElementById('div1');
+
+			/*oDiv.onmouseover=function(){//两个参数的函数
+				startMove(10,0);
+			};
+			oDiv.onmouseout=function(){
+				startMove(-10,-150);
+			};*/
+			oDiv.onmouseover=function(){//通过当前位置，判断正负，减小参数量
+				startMove(0);
+			};
+			oDiv.onmouseout=function(){
+				startMove(-150);
+			};
+		};
+		var timer = null;
+		function startMove(iTarget){
+			var oDiv=document.getElementById('div1');
+
+			var speed=0;
+			if(oDiv.offsetLeft>iTarget){
+				speed=-10;
+			}
+			else{
+				speed=10;
+			}
+			clearInterval(timer);
+			timer=setInterval(function(){
+				if(oDiv.offsetLeft==iTarget){
+					clearInterval(timer);
+				}
+				else{
+					oDiv.style.left=oDiv.offsetLeft+speed+'px';
+				}
+			},30);
+		};
+		/*function startMove(speed,iTarget){  //两个参数的函数
+			var oDiv=document.getElementById('div1');
+			clearInterval(timer);
+			timer=setInterval(function(){
+				if(oDiv.offsetLeft==iTarget){
+					clearInterval(timer);
+				}
+				else{
+					oDiv.style.left=oDiv.offsetLeft+speed+'px';
+				}
+			},30);
+		};*/
+		/*function startMove2(){   //onmouseout的事件，可和onmouseover合并
+			var oDiv=document.getElementById('div1');
+			clearInterval(timer);
+			timer=setInterval(function(){
+				if(oDiv.offsetLeft==-150){
+					clearInterval(timer);
+				}
+				else{
+					oDiv.style.left=oDiv.offsetLeft-10+'px';
+				}
+			},30);
+		}*/
+	</script>
+</head>
+<body>
+	<div id="div1"><!-- onmouseover="startMove()" onmouseout="startMove2()"-->
+	<span id="span1"  >分享到</span>
+	</div>
+	<button onclick="startMove()">kaishi</button>
+</body>
+</html>

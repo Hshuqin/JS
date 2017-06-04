@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多物体淡入淡出</title>
+	<style>
+		div {width:100px;height:100px;background:red;margin:20px;float:left;}
+	</style>
+	<script>
+	window.onload=function(){
+		var oDiv1=document.getElementById('div1');
+		var oDiv2=document.getElementById('div2');
+
+		oDiv1.onmouseover=function(){
+			startMove(this,400);
+		}
+		oDiv1.onmouseout=function(){
+			startMove(this,100);
+		}
+
+		oDiv2.onmouseover=function(){
+			startMove1(this,400);
+		}
+		oDiv2.onmouseout=function(){
+			startMove1(this,100);
+		}
+		
+	};
+
+	/*var alpha=30;*/
+		//bug: 一个alpha，会出现抢alpha的事件，导致两个定时器一个+，一个-，导致bug
+		function startMove(obj,iTarget){
+			clearInterval(obj.timer);
+			obj.timer=setInterval(function(){
+				var speed=(iTarget-obj.offsetHeight)/6;
+				speed=speed>0?Math.ceil(speed):Math.floor(speed);
+
+				if(obj.offsetHeight==iTarget){
+					clearInterval(obj.timer);
+				}else{
+					obj.style.height=obj.offsetHeight+speed+'px';
+				}
+			},30);
+		};
+		function startMove1(obj,iTarget){
+			clearInterval(obj.timer);
+			obj.timer=setInterval(function(){
+				var speed=(iTarget-obj.offsetWidth)/6;
+				speed=speed>0?Math.ceil(speed):Math.floor(speed);
+
+				if(obj.offsetWidth==iTarget){
+					clearInterval(obj.timer);
+				}else{
+					obj.style.width=obj.offsetWidth+speed+'px';
+				}
+			},30);
+		}
+		//bug:多个的运动框架，代码多，应该合并成一个。
+		/*offset的bug：在div外面加上边框，offsetWidth就应该为102（offsetWidth获得的是盒模型的宽度），而obj.style.width=100px,所以obj.style.width=obj.offsetWidth-speed+'px'变成了102-1=101px*/
+	</script>
+</head>
+<body>
+	<div id="div1">变高</div>
+	<div id="div2">变宽</div>
+</body>
+</html>

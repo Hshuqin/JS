@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>offset的bug</title>
+	<style>
+		#div1{width:100px;height:100px;background:red;border:1px solid black;}
+	</style>
+	<script>
+		setInterval(function(){
+			var oDiv=document.getElementById('div1');
+
+			oDiv.style.width=oDiv.offsetWidth-1+'px';
+		},30);
+		/*offset的bug：在div外面加上边框，offsetWidth就应该为102（offsetWidth获得的是盒模型的宽度），而obj.style.width=100px,所以obj.style.width=obj.offsetWidth-speed+'px'变成了102-1=101px*/
+	</script>
+</head>
+<body>
+	<div id="div1"></div>
+</body>
+</html>

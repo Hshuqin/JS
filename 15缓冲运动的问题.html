@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>缓冲运动的问题</title>
+	<style>
+		#div1{width:100px;height:100px;background:red;position:absolute;left:0;top:50px;}
+		#div2{width:1px;height:300px;position:absolute;left:300px;top:0;background:black;}
+	</style>
+	<script>
+	//Math.ceil()向上取整。 Math.floor()向下取整
+		function startMove(){
+			var oDiv=document.getElementById('div1');
+			setInterval(function(){
+				var speed = (300-oDiv.offsetLeft)/10;
+				//speed=Math.ceil(speed);
+				speed=speed>0?Math.ceil(speed):Math.floor(speed);//速度大于0，向上取整，小于0，向下取整
+               //做缓冲运动时，都要取整，不然会出问题
+				oDiv.style.left=oDiv.offsetLeft+speed+'px';
+				document.title=oDiv.offsetLeft+','+speed;
+			},30);
+		}
+	</script>
+</head>
+<body>
+<input type="button" value="开始运动" onclick="startMove()">
+	<div id="div1"></div>
+	<div id="div2"></div>
+</body>
+</html>
